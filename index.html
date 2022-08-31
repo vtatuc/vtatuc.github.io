@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Email Signature</TITLE>
+<META content="text/html; charset=utf-8" http-equiv="Content-Type">
+</HEAD>
+<BODY style="font-size: 10pt; font-family: 'Calibri', sans-serif;">
+
+<div>
+<label>Name:</label>
+<input id="source_name" type="text" placeholder="Enter name" value="Johan Andersson"></input></br>
+<label>Position:</label>
+<input id="source_position" type="text" placeholder="Enter position" value="President, Adoreal"></input></br>
+<label>Phone:</label>
+<input id="source_phone" type="text" placeholder="Enter phone" value="+40 000 000 000"></input></br>
+<label>Email:</label>
+<input id="source_email" type="text" placeholder="Enter email" value="johan@adoreal.com"></input></br>
+</div>
+
+<h3>Preview:</h3>
+
+<div id="copyMe">
+<div>
+<img style="display: inline-block; vertical-align: middle;"" src="https://i.imgur.com/Y3H7AgC.png" width="230">
+<div style="display: inline-block; vertical-align: middle; margin-left: 20px;">
+<h2 style="margin: 0; padding: 0;" id="result_name"></h2>
+<span id="result_position" style="font-size: 10pt;"></span>
+</div>
+</div>
+<div>
+
+<div id="phone">
+<img style="display: inline-block; vertical-align: middle; margin-right: 5px;" src="https://i.imgur.com/FJnb0oh.png" width="16">
+<span id="result_phone" style="display: inline-block; vertical-align: middle;  font-size: 12pt;"></span>
+</div>
+
+<div id="email">
+<img style="display: inline-block; vertical-align: middle; margin-right: 5px;" src="https://i.imgur.com/NfAkL9T.png" width="16">
+<span id="result_email" style="display: inline-block; vertical-align: middle;  font-size: 12pt;"></span>
+</div>
+
+</div>
+</div>
+<br><br>
+
+<button onclick="copyFormatted(document.getElementById('copyMe').innerHTML)">
+  Copy the signature
+ </button>
+
+
+<script>
+
+
+function copyFormatted (html) {
+  // Create container for the HTML
+  // [1]
+  var container = document.createElement('div')
+  container.innerHTML = html
+
+  // Hide element
+  // [2]
+  container.style.position = 'fixed'
+  container.style.pointerEvents = 'none'
+  container.style.opacity = 0
+
+  // Detect all style sheets of the page
+  var activeSheets = Array.prototype.slice.call(document.styleSheets)
+    .filter(function (sheet) {
+      return !sheet.disabled
+    })
+
+  // Mount the container to the DOM to make `contentWindow` available
+  // [3]
+  document.body.appendChild(container)
+
+  // Copy to clipboard
+  // [4]
+  window.getSelection().removeAllRanges()
+
+  var range = document.createRange()
+  range.selectNode(container)
+  window.getSelection().addRange(range)
+
+  // [5.1]
+  document.execCommand('copy')
+
+  // [5.2]
+  for (var i = 0; i < activeSheets.length; i++) activeSheets[i].disabled = true
+
+  // [5.3]
+  document.execCommand('copy')
+
+  // [5.4]
+  for (var i = 0; i < activeSheets.length; i++) activeSheets[i].disabled = false
+
+  // Remove the container
+  // [6]
+  document.body.removeChild(container)
+}
+
+
+
+	const source_name = document.getElementById('source_name');
+	const result_name = document.getElementById('result_name');
+	
+	
+	const source_position = document.getElementById('source_position');
+	const result_position = document.getElementById('result_position');
+	
+	
+	const source_phone = document.getElementById('source_phone');
+	const result_phone = document.getElementById('result_phone');
+	
+	const source_email = document.getElementById('source_email');
+	const result_email = document.getElementById('result_email');
+	
+	result_name.innerHTML = source_name.value
+	result_position.innerHTML = source_position.value
+	result_phone.innerHTML = source_phone.value
+	result_email.innerHTML = source_email.value
+	
+	console.log(source_name)
+
+	const inputHandlerName = function(e) {
+		result_name.innerHTML = e.target.value;
+	}
+	
+	const inputHandlerPosition = function(e) {
+		result_position.innerHTML = e.target.value;
+	}
+	
+	
+	const inputHandlerPhone = function(e) {
+		result_phone.innerHTML = e.target.value;
+	}
+	
+	const inputHandlerEmail = function(e) {
+		result_email.innerHTML = e.target.value;
+	}
+
+source_name.addEventListener('input', inputHandlerName);
+source_name.addEventListener('propertychange', inputHandlerName); // for IE8
+
+source_position.addEventListener('input', inputHandlerPosition);
+source_position.addEventListener('propertychange', inputHandlerPosition); // for IE8
+
+
+source_phone.addEventListener('input', inputHandlerPhone);
+source_phone.addEventListener('propertychange', inputHandlerPhone); // for IE8
+
+
+source_email.addEventListener('input', inputHandlerEmail);
+source_email.addEventListener('propertychange', inputHandlerEmail); // for IE8
+
+
+
+</script>
+
+</body>
+</html>
